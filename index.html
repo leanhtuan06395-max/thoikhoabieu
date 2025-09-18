@@ -1,3 +1,6 @@
+Đã sửa và hoàn thiện (đóng thẻ `</body></html>` + giữ avatar chibi + hiệu ứng chùm nho + data đầy đủ). Bạn thay toàn bộ file bằng mã dưới đây:
+
+```html
 <!DOCTYPE html>
 <html lang="vi" data-theme="light">
 <head>
@@ -46,7 +49,11 @@
     @keyframes spin{to{transform:rotate(1turn)}}
     .hdr{max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px}
     .brand{display:flex; gap:14px; align-items:center}
-    .logo{width:56px; height:56px; border-radius:18px; display:grid; place-items:center; font-weight:800; font-family:Poppins, sans-serif; background:#ffffff22; box-shadow:inset 0 0 0 2px #ffffff55}
+    .logo{
+      width:56px; height:56px; border-radius:999px; overflow:hidden; display:flex; align-items:center; justify-content:center;
+      background:#ffffff22; box-shadow:inset 0 0 0 2px #ffffff55
+    }
+    .logo img{width:100%; height:100%; object-fit:cover;}
     .title{margin:0; font:600 34px/1.1 Poppins, sans-serif; letter-spacing:-.02em}
     #today{opacity:.95; font-weight:600}
     .actions{display:flex; gap:10px}
@@ -73,32 +80,28 @@
     .highlight:after{content:"ĐANG HỌC"; position:absolute; top:6px; right:6px; font-size:10px; font-weight:900; background:#22c55e; color:#fff; padding:2px 6px; border-radius:999px; letter-spacing:.04em; opacity:.9}
     footer{padding:22px; text-align:center; color:var(--muted)}
 
-    /* Hiệu ứng trung thu */
-    .lantern {
-      position: fixed;
-      top: -100px;
-      width: 40px;
-      height: 60px;
-      background: radial-gradient(circle at center, #f87171, #b91c1c);
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(255,0,0,0.6);
-      animation: fall 12s linear infinite;
-      z-index: 9999;
+    /* Hiệu ứng chùm nho rơi (nhẹ, ít) */
+    .grape-cluster{
+      position:fixed; top:-100px; display:flex; flex-wrap:wrap;
+      width:54px; height:72px; justify-content:center;
+      animation:fall 18s linear infinite; z-index:9999;
     }
-    .lantern::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      width: 4px;
-      height: 12px;
-      background: #000;
-      transform: translateX(-50%);
+    .grape-cluster .berry{
+      width:14px; height:14px; margin:1px;
+      background:radial-gradient(circle at 30% 30%, #a855f7, #6b21a8);
+      border-radius:50%;
+      box-shadow:inset -2px -2px 4px rgba(0,0,0,.25);
     }
-    @keyframes fall {
-      0% { transform: translateY(-100px) rotate(0deg); opacity:1; }
-      100% { transform: translateY(110vh) rotate(360deg); opacity:0; }
+    .grape-cluster::before{
+      content:''; position:absolute; top:-16px; left:50%;
+      width:10px; height:18px; background:#15803d;
+      border-radius:4px; transform:translateX(-50%);
     }
+    @keyframes fall{
+      0%{ transform:translateY(-120px) rotate(0); opacity:1 }
+      100%{ transform:translateY(110vh) rotate(360deg); opacity:0 }
+    }
+
     @media (max-width: 768px) {
       table {font-size: 12px}
       th, td {padding: 10px 6px}
@@ -110,7 +113,7 @@
   <header>
     <div class="hdr">
       <div class="brand">
-        <div class="logo">GV</div>
+        <div class="logo"><img src="avatar-chibi.png" alt="Avatar giáo viên" onerror="this.outerHTML='GV'"/></div>
         <div>
           <h1 class="title">Thời khóa biểu Giáo viên</h1>
           <div id="today"></div>
@@ -250,13 +253,22 @@
 
     document.getElementById('year').textContent=new Date().getFullYear();
 
-    for(let i=0;i<15;i++){
-      const lantern=document.createElement('div');
-      lantern.className='lantern';
-      lantern.style.left=Math.random()*100+'vw';
-      lantern.style.animationDuration=(8+Math.random()*8)+'s';
-      document.body.appendChild(lantern);
+    // Hiệu ứng chùm nho rơi (5 cụm, rơi chậm)
+    for(let i=0;i<5;i++){
+      const cluster=document.createElement('div');
+      cluster.className='grape-cluster';
+      cluster.style.left = Math.random()*100 + 'vw';
+      cluster.style.animationDuration = (16 + Math.random()*8) + 's';
+
+      const berryCount = 7 + Math.floor(Math.random()*3);
+      for(let b=0;b<berryCount;b++){
+        const berry = document.createElement('div');
+        berry.className = 'berry';
+        cluster.appendChild(berry);
+      }
+      document.body.appendChild(cluster);
     }
   </script>
 </body>
 </html>
+```
