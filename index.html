@@ -1,364 +1,238 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Thời khóa biểu vui nhộn | Dành cho học sinh Tiểu học</title>
-  <meta name="description" content="Bảng thời khóa biểu dễ thương cho học sinh Tiểu học: màu sắc tươi sáng, icon minh họa, dễ bấm, in đẹp." />
+  <title>Thời khóa biểu giáo viên</title>
+  <meta name="description" content="Bảng thời khóa biểu cho giáo viên: sáng 4 tiết, chiều 3 tiết, có thời gian, ra chơi và nhập môn học." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Nunito:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root{
-      /* Bảng màu tươi sáng, an toàn cho mắt trẻ em */
-      --bg: #fff7ed;           /* peach-50 */
-      --surface: #ffffff;      /* white */
-      --muted: #ffe4b5;        /* moccasin-ish */
-      --text: #2b2a33;         /* dark neutral */
-      --subtext: #5b5b66;
-      --brand: #ff7ab6;        /* pink */
-      --brand-600: #f6589d;
-      --ring: #ffd6e9;
-      --card: #ffffffcc;       /* translucent */
-      --border: #ffd7ba;       /* soft orange border */
-      --accent: #6aa9ff;       /* blue */
-      --warn: #f59e0b;         /* amber-500 */
-
-      /* Nhãn màu "sticker" cho từng loại tiết */
-      --c1-bg: #fff0f6; --c1-fg:#d6336c; /* Tiếng Việt */
-      --c2-bg: #e7f5ff; --c2-fg:#1c7ed6; /* Toán */
-      --c3-bg: #e6fcf5; --c3-fg:#0ca678; /* Tự nhiên & XH */
-      --c4-bg: #fff9db; --c4-fg:#e67700; /* Mỹ thuật/Âm nhạc */
-      --c5-bg: #f3f0ff; --c5-fg:#7950f2; /* Thể dục */
+      --bg: linear-gradient(135deg, #d9afd9, #97d9e1);
+      --surface: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --primary: #6366f1;
+      --primary-dark: #4338ca;
+      --accent: #22c55e;
+      --border: #e2e8f0;
+      --highlight: #fde047;
+      --header-grad: linear-gradient(90deg, #6366f1, #06b6d4);
+      --break-bg: #fef3c7;
+      --lunch-bg: #fee2e2;
     }
-
-    [data-theme="dark"]{
-      --bg:#0f172a; --surface:#111827; --muted:#1f2937; --text:#e5e7eb; --subtext:#a3a3b0;
-      --brand:#f472b6; --brand-600:#ec4899; --ring:#fbcfe8; --card:#0b1220aa; --border:#334155; --accent:#60a5fa;
-      --c1-bg:#3b1022; --c1-fg:#ff99c9; --c2-bg:#0b2239; --c2-fg:#8ecaff; --c3-bg:#0c2e27; --c3-fg:#7be3c2; --c4-bg:#3a2a02; --c4-fg:#ffd58a; --c5-bg:#221a3a; --c5-fg:#c9b6ff;
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
     body{
-      margin:0; font-family:'Baloo 2', 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, Arial; color:var(--text);
-      background:
-        radial-gradient(120vh 60vh at 10% -10%, #ffe1f0 10%, transparent 60%),
-        radial-gradient(100vh 60vh at 120% 10%, #dbeafe 0%, transparent 60%),
-        linear-gradient(180deg, var(--bg), #fff);
-      line-height:1.6;
+      margin:0;
+      font-family:'Inter',sans-serif;
+      background:var(--bg);
+      background-attachment:fixed;
+      background-size:cover;
+      color:var(--text);
     }
-    .clouds{position:fixed; inset:0; pointer-events:none; opacity:.35; background:
-      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400"><g fill="%23ffffff"><circle cx="140" cy="120" r="40"/><circle cx="180" cy="120" r="50"/><circle cx="220" cy="120" r="40"/><rect x="140" y="120" width="80" height="40"/></g></svg>') repeat top/400px auto;
-    }
-
-    a{color:var(--accent); text-decoration:none}
-    .container{max-width:1100px; margin:0 auto; padding:24px}
-
     header{
-      position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(10px);
-      background:color-mix(in oklab, var(--bg) 75%, transparent);
-      border-bottom:2px dashed var(--border);
+      padding:40px 20px;
+      text-align:center;
+      background:var(--header-grad);
+      color:white;
+      box-shadow:0 6px 20px rgba(0,0,0,0.25);
+      border-bottom-left-radius:20px;
+      border-bottom-right-radius:20px;
     }
-    .nav{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 24px}
-    .brand{display:flex; align-items:center; gap:12px}
-    .logo{width:44px; height:44px; display:grid; place-items:center; border-radius:14px; background:linear-gradient(135deg, #ffd166, #fca5a5); color:#5b5b66; font-weight:800; box-shadow:0 6px 0 #f59e0b33}
-    .logo span{font-size:22px}
-    .nav a{color:var(--text)}
-    .navlinks{display:flex; gap:14px; align-items:center}
-    .btn{display:inline-flex; align-items:center; gap:8px; padding:12px 16px; border-radius:999px; border:2px solid var(--border); background:linear-gradient(0deg,var(--surface),var(--surface)); color:var(--text); cursor:pointer; font-weight:700; box-shadow:0 6px 0 #0000000a}
-    .btn:hover{box-shadow:0 0 0 4px var(--ring)}
-    .btn.primary{background:linear-gradient(135deg, var(--brand), var(--brand-600)); border-color:transparent; color:#fff}
-
-    .hero{padding:56px 24px 24px; text-align:center}
-    .title{font-size:clamp(30px, 5vw, 54px); line-height:1.1; font-weight:800; letter-spacing:-0.01em}
-    .subtitle{font-size:clamp(15px, 2.2vw, 18px); color:var(--subtext); max-width:760px; margin:10px auto 18px}
-    .tags{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:10px}
-    .tag{padding:8px 12px; border-radius:999px; border:2px dashed var(--border); color:var(--subtext); font-size:13px; background:#fff}
-
-    .panel{background:var(--card); backdrop-filter:blur(6px); border:2px dashed var(--border); border-radius:24px; padding:18px}
-    .grid{display:grid; gap:16px}
-    @media(min-width:900px){ .grid.cols-2{grid-template-columns:1.2fr 0.9fr} }
-
-    .card{background:var(--surface); border:2px dashed var(--border); border-radius:20px; padding:16px}
-    .card h3{margin:0 0 8px; font-size:20px}
-    .muted{color:var(--subtext); font-size:15px}
-
-    /* BẢNG TKB CHO HỌC SINH */
-    .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px}
-    .toolbar .btn{padding:10px 14px; font-size:15px}
-    .toolbar .soft{border-style:dashed}
-
-    .table-wrap{overflow:auto; border-radius:18px; border:2px dashed var(--border)}
-    table{width:100%; border-collapse:separate; border-spacing:0; background:var(--surface); font-size:16px}
-    thead th{position:sticky; top:0; z-index:1; background:linear-gradient(0deg, #fffbeb, #fff); color:var(--text); font-weight:800}
-    th,td{border-bottom:2px dashed var(--border); border-right:2px dashed var(--border); padding:12px; text-align:center; min-width:110px}
-    th:first-child, td:first-child{position:sticky; left:0; background:color-mix(in oklab, var(--surface) 95%, transparent); z-index:1; font-weight:800}
-    tr:last-child td{border-bottom:none}
-    th:last-child, td:last-child{border-right:none}
-    td[contenteditable="true"]{outline:none; border-radius:14px; min-height:64px}
-    td:focus{box-shadow:inset 0 0 0 3px var(--accent)}
-
-    /* Nhãn màu "sticker" */
-    .c1{background:var(--c1-bg); color:var(--c1-fg); font-weight:700}
-    .c2{background:var(--c2-bg); color:var(--c2-fg); font-weight:700}
-    .c3{background:var(--c3-bg); color:var(--c3-fg); font-weight:700}
-    .c4{background:var(--c4-bg); color:var(--c4-fg); font-weight:700}
-    .c5{background:var(--c5-bg); color:var(--c5-fg); font-weight:700}
-
-    .foot{display:flex; justify-content:space-between; gap:12px; align-items:center; margin-top:14px}
-
-    .legend{display:flex; gap:8px; flex-wrap:wrap}
-    .swatch{display:inline-flex; align-items:center; gap:6px; padding:8px 12px; border-radius:999px; border:2px dashed var(--border); font-size:13px; background:#fff}
-
-    /* FAQ & Liên hệ */
-    details{background:var(--surface); border:2px dashed var(--border); border-radius:16px; padding:12px}
-    summary{cursor:pointer; font-weight:700}
-    form{display:grid; gap:10px}
-    input, textarea, select{padding:12px 14px; border-radius:14px; border:2px dashed var(--border); background:var(--surface); color:var(--text)}
-
-    .hint{font-size:13px; color:var(--subtext)}
-
-    /* PRINT */
-    @media print{
-      header, .hero, .aside, .foot, .faq, .contact, .credits, .clouds{display:none}
-      body{background:white; color:black}
-      .container{max-width:100%; padding:0}
-      .panel{border:none; padding:0}
-      table{font-size:12px}
-      th, td{padding:6px}
+    header h2{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      font-size:36px;
+      letter-spacing:1px;
+    }
+    #today{
+      font-size:18px;
+      margin-top:8px;
+      opacity:0.9;
+    }
+    main{
+      max-width:1100px;
+      margin:50px auto;
+      padding:0 20px;
+    }
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      border-radius:20px;
+      overflow:hidden;
+      background:rgba(255,255,255,0.9);
+      backdrop-filter:blur(8px);
+      box-shadow:0 12px 30px rgba(0,0,0,0.15);
+      animation:fadeIn 1s ease;
+    }
+    thead{
+      background:linear-gradient(90deg, #06b6d4, #3b82f6);
+      color:white;
+    }
+    th,td{
+      border:1px solid var(--border);
+      padding:16px;
+      text-align:center;
+      transition:background 0.3s;
+    }
+    th{
+      font-weight:600;
+      font-family:'Poppins',sans-serif;
+      font-size:16px;
+    }
+    td[contenteditable="true"]{
+      background:#ffffffcc;
+      cursor:text;
+    }
+    td[contenteditable="true"]:hover{
+      background:#f1f5f9;
+    }
+    td[contenteditable="true"]:focus{
+      outline:2px solid var(--primary);
+      background:#e0e7ff;
+    }
+    tr:hover td:not(.break-row td):not(.lunch-row td){
+      background:#f8fafc;
+    }
+    .highlight{
+      background:var(--highlight)!important;
+      font-weight:700;
+      border:2px solid var(--accent);
+      animation:pulse 1s infinite;
+    }
+    .break-row td{
+      background:var(--break-bg)!important;
+      font-style:italic;
+      font-weight:600;
+      color:#92400e;
+    }
+    .lunch-row td{
+      background:var(--lunch-bg)!important;
+      font-style:italic;
+      font-weight:600;
+      color:#991b1b;
+    }
+    footer{
+      padding:25px;
+      text-align:center;
+      font-size:15px;
+      color:var(--muted);
+      background:rgba(255,255,255,0.7);
+      margin-top:50px;
+      border-top:1px solid var(--border);
+      border-top-left-radius:20px;
+      border-top-right-radius:20px;
+    }
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(20px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    @keyframes pulse{
+      0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7)}
+      70%{box-shadow:0 0 0 12px rgba(34,197,94,0)}
+      100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}
     }
   </style>
 </head>
 <body>
-  <div class="clouds" aria-hidden="true"></div>
   <header>
-    <nav class="nav">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"><span>🎒</span></div>
-        <strong>Thời khóa biểu Tiểu học</strong>
-      </div>
-      <div class="navlinks">
-        <a href="#tkb">Bảng TKB</a>
-        <a href="#faq">Hướng dẫn</a>
-        <a href="#contact">Liên hệ</a>
-        <button class="btn" id="themeBtn" aria-label="Đổi giao diện">🌈 Giao diện</button>
-        <button class="btn primary" id="printBtn">🖨️ In</button>
-      </div>
-    </nav>
+    <h2>📅 Thời khóa biểu Giáo viên</h2>
+    <div id="today"></div>
   </header>
 
-  <section class="hero">
-    <h1 class="title">Lịch học <span style="background:linear-gradient(90deg,var(--brand),#fca5a5); -webkit-background-clip:text; color:transparent">vui nhộn</span> mỗi ngày ✨</h1>
-    <p class="subtitle">Các bạn nhỏ có thể tự điền môn học, dán nhãn màu kiểu <em>sticker</em>, lưu lại và in ra dán vào bàn học!</p>
-    <div class="tags">
-      <span class="tag">Dễ bấm</span>
-      <span class="tag">Màu tươi sáng</span>
-      <span class="tag">Sticker môn học</span>
-      <span class="tag">In đẹp</span>
-    </div>
-  </section>
-
-  <main class="container grid cols-2">
-    <section class="panel" id="tkb" aria-labelledby="tkb-title">
-      <div class="toolbar">
-        <button class="btn" id="clearBtn">🧹 Xóa hết</button>
-        <button class="btn" id="saveBtn">💾 Lưu</button>
-        <button class="btn soft" id="exportJsonBtn">⬇️ Xuất JSON</button>
-        <button class="btn soft" id="importJsonBtn">⬆️ Nhập JSON</button>
-        <button class="btn soft" id="exportCsvBtn">📄 Xuất CSV</button>
-        <span class="hint">Mẹo: nhấp đôi để đổi nhãn màu</span>
-      </div>
-      <div class="table-wrap">
-        <table id="table" aria-describedby="tkb-desc">
-          <caption id="tkb-desc" class="muted" style="caption-side:bottom; padding:8px 12px">Bảng thời khóa biểu 7 ngày × 8 tiết. Có thể chỉnh số hàng/có CN.</caption>
-          <thead>
-            <tr>
-              <th>Tiết / Ngày</th>
-              <th>Thứ 2</th>
-              <th>Thứ 3</th>
-              <th>Thứ 4</th>
-              <th>Thứ 5</th>
-              <th>Thứ 6</th>
-              <th>Thứ 7</th>
-              <th>CN</th>
-            </tr>
-          </thead>
-          <tbody id="tbody"></tbody>
-        </table>
-      </div>
-      <div class="foot">
-        <div class="legend" aria-label="Chú thích nhãn màu">
-          <span class="swatch" data-idx="1">📖 Tiếng Việt</span>
-          <span class="swatch" data-idx="2">🧮 Toán</span>
-          <span class="swatch" data-idx="3">🔬 TN & XH</span>
-          <span class="swatch" data-idx="4">🎨 Nghệ thuật</span>
-          <span class="swatch" data-idx="5">🏃 Thể dục</span>
-        </div>
-        <div style="display:flex; gap:8px; align-items:center">
-          <label class="muted">Số tiết: <input type="number" id="rowsInput" min="1" max="12" value="8" style="width:70px"></label>
-          <label class="muted">Có CN: <input type="checkbox" id="sunToggle" checked></label>
-        </div>
-      </div>
-    </section>
-
-    <aside class="grid aside">
-      <div class="card">
-        <h3 id="faq">Hướng dẫn nhanh cho bé</h3>
-        <ol class="muted" style="padding-left:18px; margin:8px 0 0">
-          <li>Nhấp vào ô để viết tên môn học, ví dụ: <em>Toán</em>, <em>Tập đọc</em>.</li>
-          <li>Nhấp đôi (double‑click) để đổi <strong>màu sticker</strong> cho ô đó.</li>
-          <li>Nhấn <strong>Lưu</strong> để cất lại. Có thể <strong>Xuất JSON/CSV</strong> để chia sẻ.</li>
-          <li>Điều chỉnh <strong>Số tiết</strong> hoặc bật/tắt <strong>CN</strong> theo thời khóa biểu của lớp.</li>
-          <li>Nhấn <strong>In</strong> để in ra dán vào góc học tập nhé! 🙂</li>
-        </ol>
-      </div>
-
-      <div class="card faq">
-        <h3>Câu hỏi thường gặp</h3>
-        <details>
-          <summary>Làm sao chuyển sang nền tối (ban đêm)?</summary>
-          <p class="muted">Nhấn nút 🌈 Giao diện ở góc trên để đổi giữa sáng/tối.</p>
-        </details>
-        <details>
-          <summary>Dữ liệu lưu ở đâu?</summary>
-          <p class="muted">Dữ liệu lưu trong trình duyệt của con (localStorage), không gửi đi nơi khác.</p>
-        </details>
-      </div>
-
-      <div class="card contact" id="contact">
-        <h3>Góp ý cho bố mẹ/thầy cô</h3>
-        <form onsubmit="event.preventDefault(); alert('Cảm ơn bạn! Mình đã nhận góp ý.'); this.reset();">
-          <input type="text" placeholder="Họ tên" required>
-          <input type="email" placeholder="Email" required>
-          <textarea rows="4" placeholder="Nội dung góp ý"></textarea>
-          <button class="btn primary" type="submit">Gửi góp ý</button>
-        </form>
-      </div>
-
-      <div class="card credits">
-        <h3>Ghi chú</h3>
-        <p class="muted">Giao diện tối ưu cho học sinh Tiểu học: phông chữ tròn trịa, nút to dễ bấm, màu sắc thân thiện.</p>
-      </div>
-    </aside>
+  <main>
+    <table id="table">
+      <thead>
+        <tr>
+          <th>Ca</th>
+          <th>Tiết</th>
+          <th>Giờ</th>
+          <th>Thứ 2</th>
+          <th>Thứ 3</th>
+          <th>Thứ 4</th>
+          <th>Thứ 5</th>
+          <th>Thứ 6</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
   </main>
 
-  <footer class="container" style="text-align:center; color:var(--subtext); padding-bottom:48px">
-    © <span id="year"></span> Thời khóa biểu vui nhộn · Học vui mỗi ngày.
-  </footer>
+  <footer>© <span id="year"></span> Thời khóa biểu giáo viên</footer>
 
   <script>
-    const $ = (q,root=document)=>root.querySelector(q);
-    const $$ = (q,root=document)=>[...root.querySelectorAll(q)];
+    const tbody = document.getElementById('tbody');
+    const caTiet = [
+      { ca:'Sáng', tiet:1, gio:'07:30 - 08:05' },
+      { ca:'Sáng', tiet:2, gio:'08:10 - 08:45' },
+      { break:true, ca:'Sáng', gio:'08:45 - 09:00', label:'Ra chơi' },
+      { ca:'Sáng', tiet:3, gio:'09:15 - 09:50' },
+      { ca:'Sáng', tiet:4, gio:'09:55 - 10:30' },
+      { lunch:true, gio:'10:30 - 13:30', label:'Nghỉ trưa' },
+      { ca:'Chiều', tiet:1, gio:'13:30 - 14:05' },
+      { ca:'Chiều', tiet:2, gio:'14:10 - 14:45' },
+      { break:true, ca:'Chiều', gio:'14:45 - 15:00', label:'Ra chơi' },
+      { ca:'Chiều', tiet:3, gio:'15:25 - 16:00' }
+    ];
 
-    const tbody = $('#tbody');
-    const rowsInput = $('#rowsInput');
-    const sunToggle = $('#sunToggle');
-
-    const STORAGE_KEY = 'tkb-data-v2-student';
-    const THEME_KEY = 'tkb-theme';
-
-    // Thêm 1 màu nữa cho Thể dục
-    const colorCycle = ['', 'c1','c2','c3','c4','c5'];
-
-    function buildTable(rows=8, includeSun=true){
+    function buildTable(){
       tbody.innerHTML='';
-      const days = includeSun ? 7 : 6;
-      for(let r=1;r<=rows;r++){
-        const tr = document.createElement('tr');
-        const head = document.createElement('th'); head.textContent = 'Tiết ' + r; tr.appendChild(head);
-        for(let c=1;c<=days;c++){
-          const td = document.createElement('td');
-          td.setAttribute('contenteditable','true');
-          td.dataset.colorIndex = 0;
-          td.addEventListener('dblclick', ()=>{
-            let i = (+td.dataset.colorIndex + 1) % colorCycle.length; td.dataset.colorIndex=i;
-            colorCycle.forEach(cl=> cl && td.classList.remove(cl));
-            const cl = colorCycle[i]; if(cl) td.classList.add(cl);
-          });
-          tr.appendChild(td);
+      caTiet.forEach(row=>{
+        const tr=document.createElement('tr');
+        if(row.break){
+          tr.classList.add('break-row');
+          tr.innerHTML=`
+            <td>${row.ca}</td>
+            <td colspan="2">${row.label}<br><small>${row.gio}</small></td>
+            ${'<td colspan="1"></td>'.repeat(5)}
+          `;
+        } else if(row.lunch){
+          tr.classList.add('lunch-row');
+          tr.innerHTML=`
+            <td colspan="3">${row.label}<br><small>${row.gio}</small></td>
+            ${'<td colspan="1"></td>'.repeat(5)}
+          `;
+        } else {
+          tr.innerHTML=`
+            <td>${row.ca}</td>
+            <td>${row.tiet}</td>
+            <td>${row.gio}</td>
+            ${'<td contenteditable="true" placeholder="Môn học"></td>'.repeat(5)}
+          `;
         }
         tbody.appendChild(tr);
+      });
+    }
+
+    function highlightCurrent(){
+      const now=new Date();
+      const day=now.getDay();
+      const h=now.getHours(), m=now.getMinutes();
+      let currentTime=h*60+m;
+
+      if(day>=1 && day<=5){
+        caTiet.forEach((row,i)=>{
+          if(!row.break && !row.lunch){
+            const [start,end]=row.gio.split(' - ');
+            const toMin=t=>{const [hh,mm]=t.split(':').map(Number);return hh*60+mm};
+            const s=toMin(start), e=toMin(end);
+            if(currentTime>=s && currentTime<=e){
+              tbody.rows[i].cells[day+2].classList.add('highlight');
+            }
+          }
+        });
       }
+
+      const todayStr= now.toLocaleDateString('vi-VN', { weekday:'long', year:'numeric', month:'long', day:'numeric'});
+      document.getElementById('today').textContent="Hôm nay: "+todayStr;
     }
 
-    function toJSON(){
-      const data = { rows: +rowsInput.value, sun: sunToggle.checked, cells: [] };
-      $$('#tbody tr').forEach(tr=>{
-        const row=[]; $$('td',tr).forEach(td=>{
-          row.push({text: td.innerHTML, color: colorCycle[+td.dataset.colorIndex]||''});
-        });
-        data.cells.push(row);
-      });
-      return data;
-    }
-
-    function fromJSON(data){
-      if(!data) return;
-      rowsInput.value = data.rows ?? 8;
-      sunToggle.checked = data.sun ?? true;
-      buildTable(+rowsInput.value, sunToggle.checked);
-      $$('#tbody tr').forEach((tr,ri)=>{
-        $$('td',tr).forEach((td,ci)=>{
-          const cell = data.cells?.[ri]?.[ci];
-          if(cell){ td.innerHTML = cell.text || ''; const idx = colorCycle.indexOf(cell.color||''); td.dataset.colorIndex = Math.max(0, idx); colorCycle.forEach(cl=> cl && td.classList.remove(cl)); if(idx>0) td.classList.add(cell.color); }
-        });
-      });
-    }
-
-    function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(toJSON())); toast('Đã lưu! ✅'); }
-    function load(){ const raw = localStorage.getItem(STORAGE_KEY); if(raw){ try{ fromJSON(JSON.parse(raw)); }catch(e){ console.warn(e); } } else { buildTable(+rowsInput.value, sunToggle.checked); } }
-
-    function download(filename, content, type='application/json'){
-      const blob = new Blob([content], {type});
-      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; a.click(); URL.revokeObjectURL(a.href);
-    }
-
-    function uploadJSON(){
-      const inp = document.createElement('input'); inp.type='file'; inp.accept='.json,application/json';
-      inp.onchange = ()=>{
-        const file = inp.files[0]; if(!file) return;
-        const fr = new FileReader(); fr.onload = ()=>{ try{ const data = JSON.parse(fr.result); fromJSON(data); save(); toast('Đã nhập JSON'); }catch(e){ alert('File không hợp lệ'); } };
-        fr.readAsText(file);
-      };
-      inp.click();
-    }
-
-    function exportCSV(){
-      const header = ['Tiet/Ngay','Thu 2','Thu 3','Thu 4','Thu 5','Thu 6','Thu 7'].concat(sunToggle.checked?['CN']:[]).join(',');
-      const lines = [header];
-      $$('#tbody tr').forEach((tr,i)=>{
-        const row=['Tiet '+(i+1)]; $$('td',tr).forEach(td=> row.push('"'+(td.innerText||'').replaceAll('"','""')+'"')); lines.push(row.join(','));
-      });
-      download('thoikhoabieu.csv', lines.join('
-'), 'text/csv');
-    }
-
-    function clearAll(){ if(confirm('Xóa toàn bộ nội dung bảng?')){ $$('#tbody td').forEach(td=>{ td.innerHTML=''; td.dataset.colorIndex = 0; colorCycle.forEach(cl=> cl && td.classList.remove(cl)); }); save(); } }
-
-    function toast(msg){
-      let t = document.createElement('div'); t.textContent = msg; t.style.position='fixed'; t.style.bottom='20px'; t.style.left='50%'; t.style.transform='translateX(-50%)'; t.style.background='var(--surface)'; t.style.border='2px dashed var(--border)'; t.style.padding='12px 16px'; t.style.borderRadius='16px'; t.style.boxShadow='0 10px 30px #0003'; t.style.zIndex='1000'; document.body.appendChild(t); setTimeout(()=>t.remove(), 1400);
-    }
-
-    // Theme
-    function setTheme(theme){ document.documentElement.setAttribute('data-theme', theme); localStorage.setItem(THEME_KEY, theme); }
-    function toggleTheme(){ const cur = document.documentElement.getAttribute('data-theme') || 'light'; setTheme(cur==='dark'?'light':'dark'); }
-
-    // Sự kiện
-    rowsInput.addEventListener('change', ()=>{ buildTable(+rowsInput.value, sunToggle.checked); save(); });
-    sunToggle.addEventListener('change', ()=>{ buildTable(+rowsInput.value, sunToggle.checked); save(); });
-    $('#saveBtn').addEventListener('click', save);
-    $('#clearBtn').addEventListener('click', clearAll);
-    $('#exportJsonBtn').addEventListener('click', ()=> download('thoikhoabieu.json', JSON.stringify(toJSON(), null, 2)));
-    $('#importJsonBtn').addEventListener('click', uploadJSON);
-    $('#exportCsvBtn').addEventListener('click', exportCSV);
-    $('#printBtn').addEventListener('click', ()=> window.print());
-    $('#themeBtn').addEventListener('click', toggleTheme);
-
-    // Khởi tạo
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const savedTheme = localStorage.getItem(THEME_KEY) || 'light'; setTheme(savedTheme);
-    load();
+    document.getElementById('year').textContent=new Date().getFullYear();
+    buildTable();
+    highlightCurrent();
+    setInterval(highlightCurrent,60000);
   </script>
 </body>
 </html>
