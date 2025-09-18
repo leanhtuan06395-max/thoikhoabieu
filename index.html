@@ -21,8 +21,8 @@
       --accent: #22c55e;
       --border: #e2e8f0;
       --highlight: #fef08a;
-      --break-grad1: #c7f9cc;
-      --break-grad2: #80ed99;
+      --break-grad1: #f3e8ff;
+      --break-grad2: #e9d5ff;
       --lunch-bg: #ffe4e6;
     }
     body{
@@ -68,25 +68,26 @@
     tr:last-child td{border-bottom:none}
     td[contenteditable="true"]{background:#ffffff; border-radius:10px}
     td[contenteditable="true"]:focus{outline:2px solid var(--primary)}
-    .break-row td{background:linear-gradient(90deg, var(--break-grad1), var(--break-grad2))!important; font-style:italic; font-weight:700; color:#065f46; border-left:6px solid #22c55e33}
+    .break-row td{background:linear-gradient(90deg, var(--break-grad1), var(--break-grad2))!important; font-style:italic; font-weight:700; color:#6b21a8; border-left:6px solid #7e22ce55}
     .lunch-row td{background:var(--lunch-bg)!important; font-style:italic; font-weight:700; color:#9f1239}
     .highlight{background:var(--highlight)!important; font-weight:800; box-shadow:0 0 0 3px #f59e0b88 inset, 0 0 0 8px #f59e0b22; border-radius:12px; position:relative}
     .highlight:after{content:"ĐANG HỌC"; position:absolute; top:6px; right:6px; font-size:10px; font-weight:900; background:#22c55e; color:#fff; padding:2px 6px; border-radius:999px; letter-spacing:.04em; opacity:.9}
     footer{padding:22px; text-align:center; color:var(--muted)}
 
-    /* Hiệu ứng chùm nho */
+    /* Hiệu ứng nho rơi tinh tế */
     .grape {
       position: fixed;
-      top: -80px;
-      width: 40px;
-      height: 40px;
-      background: radial-gradient(circle at 30% 30%, #9333ea, #6d28d9);
+      top: -60px;
+      width: 26px;
+      height: 26px;
+      background: radial-gradient(circle at 30% 30%, #a855f7, #7e22ce);
       border-radius: 50%;
-      box-shadow: -15px 10px 0px -2px rgba(147,51,234,0.9),
-                  15px 12px 0px -2px rgba(147,51,234,0.9),
-                  0px 25px 0px -2px rgba(147,51,234,0.9);
-      animation: fall 10s linear infinite;
+      box-shadow: -12px 10px 0px -2px rgba(168,85,247,0.85),
+                  12px 12px 0px -2px rgba(126,34,206,0.85),
+                  0px 22px 0px -2px rgba(147,51,234,0.85);
+      animation: fall 12s linear infinite;
       z-index: 9999;
+      opacity: 0.8;
     }
     @keyframes fall {
       0% { transform: translateY(-100px) rotate(0deg); opacity:1; }
