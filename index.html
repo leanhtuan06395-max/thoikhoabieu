@@ -21,8 +21,8 @@
       --accent: #22c55e;
       --border: #e2e8f0;
       --highlight: #fef08a;
-      --break-grad1: #e0f7fa;
-      --break-grad2: #b2f5ea;
+      --break-grad1: #c7f9cc;
+      --break-grad2: #80ed99;
       --lunch-bg: #ffe4e6;
     }
     body{
@@ -53,15 +53,15 @@
     .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px; border:1px solid #ffffff55; background:#ffffff1a; color:#fff; backdrop-filter:blur(6px); font-weight:700; cursor:pointer}
     .btn:hover{transform:translateY(-1px); box-shadow:0 8px 24px #00000026}
     .btn.primary{background:#ffffff; color:#0f172a}
-    main{max-width:1200px; margin:-32px auto 40px; padding:0 10px;}
-    .card{border-radius:22px; background:#ffffffcc; backdrop-filter:blur(10px); border:1px solid var(--border); box-shadow:0 30px 60px #00000012; max-width:100%; margin:auto; overflow:hidden}
+    main{max-width:100%; margin:-32px auto 40px; padding:0 10px; overflow-x:auto}
+    .card{border-radius:22px; background:#ffffffcc; backdrop-filter:blur(10px); border:1px solid var(--border); box-shadow:0 30px 60px #00000012; width:100%; margin:auto; overflow-x:auto}
     .card-header{display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--border)}
     .legend{display:flex; gap:8px; flex-wrap:wrap}
     .chip{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-size:12px; background:#f8fafc; border:1px solid var(--border)}
-    .table-wrap{border-radius:0 0 22px 22px}
-    table{width:100%; border-collapse:separate; border-spacing:0; background:transparent}
+    .table-wrap{border-radius:0 0 22px 22px; overflow-x:auto}
+    table{width:100%; border-collapse:separate; border-spacing:0; background:transparent; table-layout:fixed}
     thead th{position:sticky; top:0; background:#f1f5ff; font-family:Poppins, sans-serif; font-weight:700}
-    th,td{padding:14px 12px; border-bottom:1px solid var(--border); border-right:1px solid var(--border); text-align:center}
+    th,td{padding:14px 12px; border-bottom:1px solid var(--border); border-right:1px solid var(--border); text-align:center; word-wrap:break-word}
     th:first-child, td:first-child{background:#f8fafc; font-weight:700; z-index:1}
     th:last-child, td:last-child{border-right:none}
     tr:last-child td{border-bottom:none}
@@ -98,6 +98,11 @@
     @keyframes fall {
       0% { transform: translateY(-100px) rotate(0deg); opacity:1; }
       100% { transform: translateY(110vh) rotate(360deg); opacity:0; }
+    }
+    @media (max-width: 768px) {
+      table {font-size: 12px}
+      th, td {padding: 10px 6px}
+      .title {font-size: 22px}
     }
   </style>
 </head>
@@ -152,7 +157,7 @@
 
   <script>
     const tbody = document.getElementById('tbody');
-    const STORAGE_KEY = 'tkb-teacher-v5';
+    const STORAGE_KEY = 'tkb-teacher-v6';
 
     const caTiet = [
       { ca:'Sáng', tiet:1, gio:'07:30 - 08:05' },
@@ -245,7 +250,6 @@
 
     document.getElementById('year').textContent=new Date().getFullYear();
 
-    // Tạo hiệu ứng đèn lồng rơi khi tải trang
     for(let i=0;i<15;i++){
       const lantern=document.createElement('div');
       lantern.className='lantern';
