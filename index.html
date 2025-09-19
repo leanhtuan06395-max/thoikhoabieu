@@ -4,22 +4,27 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Thời khóa biểu giáo viên</title>
-  <meta name="description" content="Bảng thời khóa biểu cho giáo viên với giao diện hiện đại, tìm kiếm, export CSV, ghi chú và responsive." />
+  <meta name="description" content="TKB giáo viên: giao diện hiện đại, dark mode, tìm kiếm, import Excel, export CSV, ghi chú và hiệu ứng nhẹ." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
-    :root{--bg1:#f8fafc;--bg2:#e0f2fe;--bg3:#fde68a;--surface:#ffffff;--text:#0f172a;--muted:#64748b;--primary:#7c3aed;--primary2:#06b6d4;--accent:#22c55e;--border:#e2e8f0;--highlight:#fef08a;--break-grad1:#f3e8ff;--break-grad2:#e9d5ff;--lunch-bg:#ffe4e6;--radius:18px;--shadow-lg:0 20px 60px #00000026;--shadow-sm:0 8px 24px #0000001a}
+    :root{--bg1:#f8fafc;--bg2:#e0f2fe;--bg3:#fde68a;--surface:#ffffff;--text:#0f172a;--muted:#64748b;--primary:#7c3aed;--primary2:#06b6d4;--accent:#22c55e;--border:#e2e8f0;--highlight:#fef08a;--break-grad1:#f3e8ff;--break-grad2:#e9d5ff;--lunch-bg:#ffe4e6}
     [data-theme="dark"]{--bg1:#0b1220;--bg2:#0b1220;--bg3:#0f172a;--surface:#0f172a;--text:#e5e7eb;--muted:#94a3b8;--primary:#8b5cf6;--primary2:#22d3ee;--accent:#22c55e;--border:#1f2937;--highlight:#1f2937;--break-grad1:#1f104a;--break-grad2:#0e7490;--lunch-bg:#3f1d2e}
-    body{margin:0;font-family:'Inter',system-ui,Segoe UI,Roboto,Arial;color:var(--text);background:linear-gradient(180deg,#ffffff,var(--bg1));min-height:100vh;overflow-x:hidden}
-    header{padding:42px 20px 56px;color:#fff;background:linear-gradient(100deg,var(--primary),var(--primary2));box-shadow:0 20px 60px #0000001a;border-bottom-left-radius:28px;border-bottom-right-radius:28px;position:relative;overflow:hidden}
+    body{margin:0;font-family:'Inter',system-ui,Segoe UI,Roboto,Arial;color:var(--text);background:
+      radial-gradient(1200px 500px at -10% -10%, var(--bg2) 0%, transparent 60%),
+      radial-gradient(900px 500px at 110% 0%, var(--bg3) 0%, transparent 55%),
+      linear-gradient(180deg,#ffffff,var(--bg1));min-height:100vh;overflow-x:hidden}
+    /* Header */
+    header{padding:42px 20px 56px;color:#fff;position:relative;overflow:hidden;background:linear-gradient(100deg,var(--primary),var(--primary2));box-shadow:0 20px 60px #0000001a;border-bottom-left-radius:28px;border-bottom-right-radius:28px}
     header:after{content:"";position:absolute;inset:-30%;background:conic-gradient(from 0deg at 50% 50%,#ffffff33,#ffffff00 20%,#ffffff33 40%,#ffffff00 60%,#ffffff33 80%,#ffffff00);animation:spin 12s linear infinite;pointer-events:none;mix-blend-mode:soft-light}
     @keyframes spin{to{transform:rotate(1turn)}}
     .hdr{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
     .brand{display:flex;gap:14px;align-items:center}
     .logo{width:56px;height:56px;border-radius:18px;overflow:hidden;display:grid;place-items:center;font-weight:800;font-family:Poppins,sans-serif;background:#ffffff22}
     .logo img{width:100%;height:100%;object-fit:cover;border-radius:18px}
-    .title{margin:0;font:600 28px/1.1 Poppins,sans-serif;letter-spacing:-.02em}
+    .title{margin:0;font:600 32px/1.1 Poppins,sans-serif;letter-spacing:-.02em}
     #today{opacity:.95;font-weight:600}
     .actions{display:flex;flex-wrap:wrap;gap:10px}
     .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;border:1px solid #ffffff55;background:#ffffff1a;color:#fff;font-weight:700;cursor:pointer;font-size:14px;transition:transform .12s ease, box-shadow .2s ease}
@@ -28,14 +33,14 @@
     .palette{display:flex;gap:6px;align-items:center}
     .palette .palette-btn{padding:6px 10px;border-radius:999px;border:1px solid #ffffff55;background:#ffffff1a;color:#fff;font-weight:700;cursor:pointer;font-size:12px}
     [data-theme="dark"] .palette .palette-btn{border-color:#334155;background:#111827cc}
-    main{max-width:100%;margin:-32px auto 40px;padding:0 10px;overflow-x:auto}
-    .card{border-radius:20px;background:#ffffffcc;backdrop-filter:saturate(140%) blur(12px);border:1px solid var(--border);box-shadow:0 30px 60px #00000012;width:100%;margin:auto;overflow-x:auto}
+    main{max-width:1100px;margin:-32px auto 40px;padding:0 10px}
+    .card{border-radius:20px;background:#ffffffcc;backdrop-filter:saturate(140%) blur(12px);border:1px solid var(--border);box-shadow:0 30px 60px #00000012;overflow:hidden}
     .card-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border)}
     .legend{display:flex;gap:8px;flex-wrap:wrap}
     .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:12px;background:#f8fafc;border:1px solid var(--border)}
     .search-box{flex:1;display:flex;justify-content:flex-end}
     .search-box input{padding:6px 10px;border:1px solid var(--border);border-radius:8px;font-size:14px;min-width:180px}
-    .table-wrap{border-radius:0 0 20px 20px;overflow-x:auto}
+    .table-wrap{overflow-x:auto}
     table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed}
     thead th{position:sticky;top:0;background:#f1f5ff;font-family:Poppins,sans-serif;font-weight:700;font-size:14px}
     th,td{padding:12px 10px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;word-wrap:break-word;font-size:13px}
@@ -51,24 +56,22 @@
     .highlight{background:var(--highlight)!important;font-weight:800;border-radius:10px;position:relative;animation:pulse 1.8s ease-in-out infinite}
     .highlight:after{content:"ĐANG HỌC";position:absolute;top:4px;right:4px;font-size:9px;font-weight:900;background:#22c55e;color:#fff;padding:2px 4px;border-radius:999px}
     @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.35)}50%{box-shadow:0 0 0 10px rgba(34,197,94,.08)}}
-    .notes-section{margin-top:20px;padding:16px;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 20px #0000000d}
-    .notes-section h2{margin:0 0 10px;font-size:18px;font-family:Poppins,sans-serif}
+    .notes-section,.form-section{margin-top:20px;padding:16px;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 20px #0000000d}
+    .notes-section h2,.form-section h2{margin:0 0 10px;font-size:18px;font-family:Poppins,sans-serif}
     .notes-section textarea{width:100%;min-height:120px;padding:10px;border-radius:8px;border:1px solid var(--border);font-size:14px;resize:vertical}
-    footer{padding:22px;text-align:center;color:var(--muted);font-size:14px}
-    /* blobs */
-    .blob{position:fixed;width:36vmin;height:36vmin;border-radius:50%;filter:blur(40px);opacity:.35;z-index:-1}
-    .blob.one{left:-10vmin;top:-10vmin;background:radial-gradient(circle at 30% 30%,#a78bfa,#06b6d4)}
-    .blob.two{right:-12vmin;top:10vmin;background:radial-gradient(circle at 70% 40%,#22d3ee,#60a5fa)}
-    .blob.three{left:20vmin;bottom:-12vmin;background:radial-gradient(circle at 40% 70%,#34d399,#a78bfa)}
-    @media (max-width:768px){.hdr{flex-direction:column;align-items:flex-start}.title{font-size:22px}table{font-size:12px}th,td{padding:8px 6px}.search-box input{min-width:120px}.notes-section h2{font-size:16px}}
+    .form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .form-grid input{padding:10px;border:1px solid var(--border);border-radius:8px}
+    .form-actions{margin-top:10px;display:flex;gap:8px}
+    /* Grapes effect */
+    .grape{position:fixed;top:-60px;width:26px;height:26px;background:radial-gradient(circle at 30% 30%,#a855f7,#7e22ce);border-radius:50%;box-shadow:-12px 10px 0px -2px rgba(168,85,247,0.85),12px 12px 0px -2px rgba(126,34,206,0.85),0px 22px 0px -2px rgba(147,51,234,0.85);animation:fall 12s linear infinite;z-index:0;opacity:.8}
+    @keyframes fall{0%{transform:translateY(-100px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(360deg);opacity:0}}
+    @media (max-width:768px){.hdr{flex-direction:column;align-items:flex-start}.title{font-size:24px}table{font-size:12px}th,td{padding:8px 6px}.search-box input{min-width:120px}.notes-section h2,.form-section h2{font-size:16px}.form-grid{grid-template-columns:1fr 1fr}}
     @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
   </style>
 </head>
 <body>
-  <!-- Ambient blobs -->
-  <div class="blob one"></div>
-  <div class="blob two"></div>
-  <div class="blob three"></div>
+  <!-- Ambient grapes -->
+  <script>for(let i=0;i<8;i++){const g=document.createElement('div');g.className='grape';g.style.left=Math.random()*100+'vw';g.style.animationDuration=(10+Math.random()*8)+'s';document.body.appendChild(g);}</script>
   <header>
     <div class="hdr">
       <div class="brand">
@@ -82,6 +85,8 @@
         <button class="btn" id="saveBtn">💾 Lưu</button>
         <button class="btn" id="printBtn">🖨️ In</button>
         <button class="btn" id="exportBtn">📤 Xuất CSV</button>
+        <label class="btn" for="excelInput">📥 Nhập Excel</label>
+        <input type="file" id="excelInput" accept=".xlsx,.xls" style="display:none" />
         <button class="btn primary" id="themeBtn">🌗 Giao diện</button>
         <div class="palette" aria-label="Chọn bảng màu">
           <button class="palette-btn" data-pal="grape" title="Grape">🍇</button>
@@ -108,12 +113,28 @@
         </table>
       </div>
     </section>
+
+    <section class="form-section">
+      <h2>📋 Nhập tiết từ form</h2>
+      <div class="form-grid">
+        <input id="formDay" type="number" min="1" max="5" placeholder="Thứ (2-6)">
+        <input id="formCa" type="text" placeholder="Ca (Sáng/Chiều)">
+        <input id="formTiet" type="number" min="1" max="4" placeholder="Tiết">
+        <input id="formValue" type="text" placeholder="Môn/Lớp (VD: 9A)">
+      </div>
+      <div class="form-actions">
+        <button class="btn primary" id="formAddBtn">➕ Thêm vào TKB</button>
+        <button class="btn" id="formClearBtn">🧹 Xoá form</button>
+      </div>
+    </section>
+
     <section class="notes-section">
       <h2>📝 Ghi chú công việc trong ngày</h2>
       <textarea id="dailyNotes" placeholder="Nhập ghi chú công việc..."></textarea>
     </section>
   </main>
   <footer>© <span id="year"></span> Thời khóa biểu giáo viên</footer>
+
   <script>
     const tbody=document.getElementById('tbody');
     const STORAGE_KEY='tkb-teacher-v6';
@@ -129,11 +150,11 @@
       {lunch:true,gio:'10:30 - 13:30',label:'Nghỉ trưa'},
       {ca:'Chiều',tiet:1,gio:'13:30 - 14:05'},
       {ca:'Chiều',tiet:2,gio:'14:10 - 14:45'},
-      {break:true,ca:'Chiều',gio:'14:45 - 15:15',label:'Ra chơi'},
-      {ca:'Chiều',tiet:3,gio:'15:20 - 16:00'}
+      {break:true,ca:'Chiều',gio:'14:45 - 15:00',label:'Ra chơi'},
+      {ca:'Chiều',tiet:3,gio:'15:25 - 16:00'}
     ];
 
-    const DATA={
+    let DATA={
       1:{"Sáng-1":"Chào cờ","Sáng-2":"2/3","Sáng-3":"","Sáng-4":"3/1","Chiều-1":"","Chiều-2":"","Chiều-3":""},
       2:{"Sáng-1":"","Sáng-2":"","Sáng-3":"","Sáng-4":"3/3","Chiều-1":"2/2","Chiều-2":"1/3","Chiều-3":"1/1"},
       3:{"Sáng-1":"","Sáng-2":"","Sáng-3":"","Sáng-4":"","Chiều-1":"","Chiều-2":"","Chiều-3":""},
@@ -204,9 +225,43 @@
       const blob=new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='tkb.csv'; a.click(); URL.revokeObjectURL(url);
     }
 
+    function importExcel(evt){
+      const file=evt.target.files[0]; if(!file) return;
+      const reader=new FileReader();
+      reader.onload=function(e){
+        const data=new Uint8Array(e.target.result);
+        const wb=XLSX.read(data,{type:'array'});
+        const sheet=wb.Sheets[wb.SheetNames[0]];
+        const rows=XLSX.utils.sheet_to_json(sheet,{header:1});
+        rows.forEach((row,i)=>{
+          if(i<caTiet.length){
+            let info=caTiet[i];
+            if(!info.break && !info.lunch){
+              for(let d=1; d<=5; d++){
+                const val=row[d+2]; // cột 0=Ca,1=Tiết,2=Giờ, 3..7 = Thứ 2..6
+                if(val!==undefined){ DATA[d][`${info.ca}-${info.tiet}`]=String(val); }
+              }
+            }
+          }
+        });
+        buildTable(); save();
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
     function searchTable(){ const keyword=document.getElementById('searchInput').value.toLowerCase(); [...tbody.rows].forEach(r=>{ let text=r.innerText.toLowerCase(); r.style.display=text.includes(keyword)?'':''; }); }
 
-    // Palette handling & theme persistence
+    function addFromForm(){
+      const day=parseInt(document.getElementById('formDay').value);
+      const ca=(document.getElementById('formCa').value||'').trim();
+      const tiet=parseInt(document.getElementById('formTiet').value);
+      const val=(document.getElementById('formValue').value||'').trim();
+      if(day>=1&&day<=5&&ca&&(tiet>=1&&tiet<=4)){
+        DATA[day][`${ca}-${tiet}`]=val; buildTable(); save();
+      } else { alert('Vui lòng nhập đầy đủ thông tin hợp lệ'); }
+    }
+
+    // THEME + PALETTE
     function applyPalette(p){
       const r=document.documentElement;
       if(p==='mint'){ r.style.setProperty('--primary','#10b981'); r.style.setProperty('--primary2','#14b8a6'); }
@@ -214,20 +269,20 @@
       else { r.style.setProperty('--primary','#7c3aed'); r.style.setProperty('--primary2','#06b6d4'); }
     }
 
-    // Init
+    // INIT
     buildTable(); load(); highlightTick(); setInterval(highlightTick,30000);
 
-    // Events
-    tbody.addEventListener('input',e=>{if(e.target.matches('[contenteditable]')){save();}});
+    // EVENTS
+    tbody.addEventListener('input',e=>{ if(e.target.matches('[contenteditable]')) save(); });
     document.getElementById('printBtn').addEventListener('click',()=>window.print());
     document.getElementById('saveBtn').addEventListener('click',save);
     document.getElementById('exportBtn').addEventListener('click',exportCSV);
     document.getElementById('searchInput').addEventListener('input',searchTable);
-    document.getElementById('themeBtn').addEventListener('click',()=>{ const root=document.documentElement; const on=root.dataset.theme||'light'; root.dataset.theme=on==='light'?'dark':'light'; try{ localStorage.setItem(THEME_KEY, root.dataset.theme); }catch{} });
+    document.getElementById('excelInput').addEventListener('change',importExcel);
+    document.getElementById('formAddBtn').addEventListener('click',addFromForm);
+    document.getElementById('formClearBtn').addEventListener('click',()=>{['formDay','formCa','formTiet','formValue'].forEach(id=>document.getElementById(id).value='');});
+    document.getElementById('themeBtn').addEventListener('click',()=>{ const root=document.documentElement; const on=root.dataset.theme||'light'; const next=on==='light'?'dark':'light'; root.dataset.theme=next; try{ localStorage.setItem(THEME_KEY,next);}catch{} });
     document.querySelectorAll('.palette-btn').forEach(b=>{ b.addEventListener('click',()=>{ const p=b.dataset.pal; applyPalette(p); try{localStorage.setItem(PAL_KEY,p);}catch{} }); });
-    document.getElementById('dailyNotes').addEventListener('input',()=>save());
-
-    // Apply saved theme/palette on load
     (function(){ try{ const t=localStorage.getItem(THEME_KEY); if(t) document.documentElement.dataset.theme=t; const p=localStorage.getItem(PAL_KEY); if(p) applyPalette(p);}catch{} })();
 
     document.getElementById('year').textContent=new Date().getFullYear();
