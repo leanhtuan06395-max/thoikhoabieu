@@ -4,104 +4,75 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Thời khóa biểu giáo viên</title>
-  <meta name="description" content="Bảng thời khóa biểu cho giáo viên: sáng 4 tiết, chiều 3 tiết, có thời gian, ra chơi và nhập môn học." />
+  <meta name="description" content="Bảng thời khóa biểu cho giáo viên với giao diện hiện đại, tìm kiếm, export CSV, ghi chú và responsive." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg1: #f8fafc;
-      --bg2: #e0f2fe;
-      --bg3: #fde68a;
-      --surface: #ffffff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --primary: #7c3aed;
-      --primary2:#06b6d4;
-      --accent: #22c55e;
-      --border: #e2e8f0;
-      --highlight: #fef08a;
-      --break-grad1: #f3e8ff;
-      --break-grad2: #e9d5ff;
-      --lunch-bg: #ffe4e6;
-    }
-    body{
-      margin:0; font-family:'Inter',system-ui,Segoe UI,Roboto,Arial; color:var(--text);
-      background:
-        radial-gradient(1200px 500px at -10% -10%, var(--bg2) 0%, transparent 60%),
-        radial-gradient(900px 500px at 110% 0%, var(--bg3) 0%, transparent 55%),
-        linear-gradient(180deg, #ffffff, var(--bg1));
-      min-height:100vh;
-      overflow-x:hidden;
-    }
-    header{
-      padding:42px 20px 56px; color:#fff; position:relative; overflow:hidden;
-      background:linear-gradient(100deg, var(--primary), var(--primary2));
-      box-shadow:0 20px 60px #0000001a; border-bottom-left-radius:28px; border-bottom-right-radius:28px;
-    }
-    header:after{
-      content:""; position:absolute; inset:-30%; background:conic-gradient(from 0deg at 50% 50%, #ffffff33, #ffffff00 20%, #ffffff33 40%, #ffffff00 60%, #ffffff33 80%, #ffffff00);
-      animation:spin 12s linear infinite; pointer-events:none; mix-blend-mode:soft-light;
-    }
+    :root{--bg1:#f8fafc;--bg2:#e0f2fe;--bg3:#fde68a;--surface:#ffffff;--text:#0f172a;--muted:#64748b;--primary:#7c3aed;--primary2:#06b6d4;--accent:#22c55e;--border:#e2e8f0;--highlight:#fef08a;--break-grad1:#f3e8ff;--break-grad2:#e9d5ff;--lunch-bg:#ffe4e6;--radius:18px;--shadow-lg:0 20px 60px #00000026;--shadow-sm:0 8px 24px #0000001a}
+    [data-theme="dark"]{--bg1:#0b1220;--bg2:#0b1220;--bg3:#0f172a;--surface:#0f172a;--text:#e5e7eb;--muted:#94a3b8;--primary:#8b5cf6;--primary2:#22d3ee;--accent:#22c55e;--border:#1f2937;--highlight:#1f2937;--break-grad1:#1f104a;--break-grad2:#0e7490;--lunch-bg:#3f1d2e}
+    body{margin:0;font-family:'Inter',system-ui,Segoe UI,Roboto,Arial;color:var(--text);background:linear-gradient(180deg,#ffffff,var(--bg1));min-height:100vh;overflow-x:hidden}
+    header{padding:42px 20px 56px;color:#fff;background:linear-gradient(100deg,var(--primary),var(--primary2));box-shadow:0 20px 60px #0000001a;border-bottom-left-radius:28px;border-bottom-right-radius:28px;position:relative;overflow:hidden}
+    header:after{content:"";position:absolute;inset:-30%;background:conic-gradient(from 0deg at 50% 50%,#ffffff33,#ffffff00 20%,#ffffff33 40%,#ffffff00 60%,#ffffff33 80%,#ffffff00);animation:spin 12s linear infinite;pointer-events:none;mix-blend-mode:soft-light}
     @keyframes spin{to{transform:rotate(1turn)}}
-    .hdr{max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px}
-    .brand{display:flex; gap:14px; align-items:center}
-    .logo{width:56px; height:56px; border-radius:18px; overflow:hidden; display:grid; place-items:center; font-weight:800; font-family:Poppins, sans-serif; background:#ffffff22; box-shadow:inset 0 0 0 2px #ffffff55}
-    .logo img{width:100%; height:100%; object-fit:cover; border-radius:18px}
-    .title{margin:0; font:600 34px/1.1 Poppins, sans-serif; letter-spacing:-.02em}
-    #today{opacity:.95; font-weight:600}
-    .actions{display:flex; gap:10px}
-    .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px; border:1px solid #ffffff55; background:#ffffff1a; color:#fff; backdrop-filter:blur(6px); font-weight:700; cursor:pointer}
-    .btn:hover{transform:translateY(-1px); box-shadow:0 8px 24px #00000026}
-    .btn.primary{background:#ffffff; color:#0f172a}
-    main{max-width:100%; margin:-32px auto 40px; padding:0 10px; overflow-x:auto}
-    .card{border-radius:22px; background:#ffffffcc; backdrop-filter:blur(10px); border:1px solid var(--border); box-shadow:0 30px 60px #00000012; width:100%; margin:auto; overflow-x:auto}
-    .card-header{display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--border)}
-    .legend{display:flex; gap:8px; flex-wrap:wrap}
-    .chip{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-size:12px; background:#f8fafc; border:1px solid var(--border)}
-    .table-wrap{border-radius:0 0 22px 22px; overflow-x:auto}
-    table{width:100%; border-collapse:separate; border-spacing:0; background:transparent; table-layout:fixed}
-    thead th{position:sticky; top:0; background:#f1f5ff; font-family:Poppins, sans-serif; font-weight:700}
-    th,td{padding:14px 12px; border-bottom:1px solid var(--border); border-right:1px solid var(--border); text-align:center; word-wrap:break-word}
-    th:first-child, td:first-child{background:#f8fafc; font-weight:700; z-index:1}
-    th:last-child, td:last-child{border-right:none}
+    .hdr{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:18px;overflow:hidden;display:grid;place-items:center;font-weight:800;font-family:Poppins,sans-serif;background:#ffffff22}
+    .logo img{width:100%;height:100%;object-fit:cover;border-radius:18px}
+    .title{margin:0;font:600 28px/1.1 Poppins,sans-serif;letter-spacing:-.02em}
+    #today{opacity:.95;font-weight:600}
+    .actions{display:flex;flex-wrap:wrap;gap:10px}
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;border:1px solid #ffffff55;background:#ffffff1a;color:#fff;font-weight:700;cursor:pointer;font-size:14px;transition:transform .12s ease, box-shadow .2s ease}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px #00000026}
+    .btn.primary{background:#ffffff;color:#0f172a}
+    .palette{display:flex;gap:6px;align-items:center}
+    .palette .palette-btn{padding:6px 10px;border-radius:999px;border:1px solid #ffffff55;background:#ffffff1a;color:#fff;font-weight:700;cursor:pointer;font-size:12px}
+    [data-theme="dark"] .palette .palette-btn{border-color:#334155;background:#111827cc}
+    main{max-width:100%;margin:-32px auto 40px;padding:0 10px;overflow-x:auto}
+    .card{border-radius:20px;background:#ffffffcc;backdrop-filter:saturate(140%) blur(12px);border:1px solid var(--border);box-shadow:0 30px 60px #00000012;width:100%;margin:auto;overflow-x:auto}
+    .card-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border)}
+    .legend{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:12px;background:#f8fafc;border:1px solid var(--border)}
+    .search-box{flex:1;display:flex;justify-content:flex-end}
+    .search-box input{padding:6px 10px;border:1px solid var(--border);border-radius:8px;font-size:14px;min-width:180px}
+    .table-wrap{border-radius:0 0 20px 20px;overflow-x:auto}
+    table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed}
+    thead th{position:sticky;top:0;background:#f1f5ff;font-family:Poppins,sans-serif;font-weight:700;font-size:14px}
+    th,td{padding:12px 10px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;word-wrap:break-word;font-size:13px}
+    th:first-child,td:first-child{background:#f8fafc;font-weight:700;z-index:1}
+    th:last-child,td:last-child{border-right:none}
     tr:last-child td{border-bottom:none}
-    td[contenteditable="true"]{background:#ffffff; border-radius:10px}
-    td[contenteditable="true"]:focus{outline:2px solid var(--primary)}
-    .break-row td{background:linear-gradient(90deg, var(--break-grad1), var(--break-grad2))!important; font-style:italic; font-weight:700; color:#6b21a8; border-left:6px solid #7e22ce55}
-    .lunch-row td{background:var(--lunch-bg)!important; font-style:italic; font-weight:700; color:#9f1239}
-    .highlight{background:var(--highlight)!important; font-weight:800; box-shadow:0 0 0 3px #f59e0b88 inset, 0 0 0 8px #f59e0b22; border-radius:12px; position:relative}
-    .highlight:after{content:"ĐANG HỌC"; position:absolute; top:6px; right:6px; font-size:10px; font-weight:900; background:#22c55e; color:#fff; padding:2px 6px; border-radius:999px; letter-spacing:.04em; opacity:.9}
-    footer{padding:22px; text-align:center; color:var(--muted)}
-
-    /* Hiệu ứng nho rơi tinh tế */
-    .grape {
-      position: fixed;
-      top: -60px;
-      width: 26px;
-      height: 26px;
-      background: radial-gradient(circle at 30% 30%, #a855f7, #7e22ce);
-      border-radius: 50%;
-      box-shadow: -12px 10px 0px -2px rgba(168,85,247,0.85),
-                  12px 12px 0px -2px rgba(126,34,206,0.85),
-                  0px 22px 0px -2px rgba(147,51,234,0.85);
-      animation: fall 12s linear infinite;
-      z-index: 9999;
-      opacity: 0.8;
-    }
-    @keyframes fall {
-      0% { transform: translateY(-100px) rotate(0deg); opacity:1; }
-      100% { transform: translateY(110vh) rotate(360deg); opacity:0; }
-    }
+    td[contenteditable="true"]{background:#ffffff;border-radius:8px;transition: box-shadow .2s ease, background .2s ease}
+    td[contenteditable="true"]:focus{outline:none;box-shadow:0 0 0 2px var(--primary2),0 0 0 6px #06b6d422;background:#fff}
+    [data-theme="dark"] td[contenteditable="true"]:focus{background:#0b1220}
+    tbody tr:hover td[contenteditable="true"]{filter:brightness(1.03)}
+    .break-row td{background:linear-gradient(90deg,var(--break-grad1),var(--break-grad2))!important;font-style:italic;font-weight:700;color:#6b21a8;border-left:6px solid #7e22ce55}
+    .lunch-row td{background:var(--lunch-bg)!important;font-style:italic;font-weight:700;color:#9f1239}
+    .highlight{background:var(--highlight)!important;font-weight:800;border-radius:10px;position:relative;animation:pulse 1.8s ease-in-out infinite}
+    .highlight:after{content:"ĐANG HỌC";position:absolute;top:4px;right:4px;font-size:9px;font-weight:900;background:#22c55e;color:#fff;padding:2px 4px;border-radius:999px}
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.35)}50%{box-shadow:0 0 0 10px rgba(34,197,94,.08)}}
+    .notes-section{margin-top:20px;padding:16px;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 20px #0000000d}
+    .notes-section h2{margin:0 0 10px;font-size:18px;font-family:Poppins,sans-serif}
+    .notes-section textarea{width:100%;min-height:120px;padding:10px;border-radius:8px;border:1px solid var(--border);font-size:14px;resize:vertical}
+    footer{padding:22px;text-align:center;color:var(--muted);font-size:14px}
+    /* blobs */
+    .blob{position:fixed;width:36vmin;height:36vmin;border-radius:50%;filter:blur(40px);opacity:.35;z-index:-1}
+    .blob.one{left:-10vmin;top:-10vmin;background:radial-gradient(circle at 30% 30%,#a78bfa,#06b6d4)}
+    .blob.two{right:-12vmin;top:10vmin;background:radial-gradient(circle at 70% 40%,#22d3ee,#60a5fa)}
+    .blob.three{left:20vmin;bottom:-12vmin;background:radial-gradient(circle at 40% 70%,#34d399,#a78bfa)}
+    @media (max-width:768px){.hdr{flex-direction:column;align-items:flex-start}.title{font-size:22px}table{font-size:12px}th,td{padding:8px 6px}.search-box input{min-width:120px}.notes-section h2{font-size:16px}}
+    @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
   </style>
 </head>
 <body>
+  <!-- Ambient blobs -->
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+  <div class="blob three"></div>
   <header>
     <div class="hdr">
       <div class="brand">
-        <div class="logo">
-          <img src="avatar-chibi.png" alt="Avatar giáo viên">
-        </div>
+        <div class="logo"><img src="avatar-chibi.png" alt="Avatar giáo viên"></div>
         <div>
           <h1 class="title">Thời khóa biểu Giáo viên</h1>
           <div id="today"></div>
@@ -110,11 +81,16 @@
       <div class="actions">
         <button class="btn" id="saveBtn">💾 Lưu</button>
         <button class="btn" id="printBtn">🖨️ In</button>
+        <button class="btn" id="exportBtn">📤 Xuất CSV</button>
         <button class="btn primary" id="themeBtn">🌗 Giao diện</button>
+        <div class="palette" aria-label="Chọn bảng màu">
+          <button class="palette-btn" data-pal="grape" title="Grape">🍇</button>
+          <button class="palette-btn" data-pal="mint" title="Mint">🌿</button>
+          <button class="palette-btn" data-pal="sunset" title="Sunset">🌅</button>
+        </div>
       </div>
     </div>
   </header>
-
   <main>
     <section class="card">
       <div class="card-header">
@@ -123,68 +99,46 @@
           <span class="chip">🛎️ Ra chơi 15′ (sáng 8:45, chiều 15:00)</span>
           <span class="chip">💡 Nhấp ô để nhập môn</span>
         </div>
+        <div class="search-box"><input type="text" id="searchInput" placeholder="🔍 Tìm kiếm..."></div>
       </div>
       <div class="table-wrap">
         <table id="table">
-          <thead>
-            <tr>
-              <th>Ca</th>
-              <th>Tiết</th>
-              <th>Giờ</th>
-              <th>Thứ 2</th>
-              <th>Thứ 3</th>
-              <th>Thứ 4</th>
-              <th>Thứ 5</th>
-              <th>Thứ 6</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Ca</th><th>Tiết</th><th>Giờ</th><th>Thứ 2</th><th>Thứ 3</th><th>Thứ 4</th><th>Thứ 5</th><th>Thứ 6</th></tr></thead>
           <tbody id="tbody"></tbody>
         </table>
       </div>
     </section>
+    <section class="notes-section">
+      <h2>📝 Ghi chú công việc trong ngày</h2>
+      <textarea id="dailyNotes" placeholder="Nhập ghi chú công việc..."></textarea>
+    </section>
   </main>
-
   <footer>© <span id="year"></span> Thời khóa biểu giáo viên</footer>
-
   <script>
-    const tbody = document.getElementById('tbody');
-    const STORAGE_KEY = 'tkb-teacher-v6';
+    const tbody=document.getElementById('tbody');
+    const STORAGE_KEY='tkb-teacher-v6';
+    const THEME_KEY='tkb-theme';
+    const PAL_KEY='tkb-pal';
 
-    const caTiet = [
-      { ca:'Sáng', tiet:1, gio:'07:30 - 08:05' },
-      { ca:'Sáng', tiet:2, gio:'08:10 - 08:45' },
-      { break:true, ca:'Sáng', gio:'08:45 - 09:00', label:'Ra chơi' },
-      { ca:'Sáng', tiet:3, gio:'09:15 - 09:50' },
-      { ca:'Sáng', tiet:4, gio:'09:55 - 10:30' },
-      { lunch:true, gio:'10:30 - 13:30', label:'Nghỉ trưa' },
-      { ca:'Chiều', tiet:1, gio:'13:30 - 14:05' },
-      { ca:'Chiều', tiet:2, gio:'14:10 - 14:45' },
-      { break:true, ca:'Chiều', gio:'14:45 - 15:00', label:'Ra chơi' },
-      { ca:'Chiều', tiet:3, gio:'15:25 - 16:00' }
+    const caTiet=[
+      {ca:'Sáng',tiet:1,gio:'07:30 - 08:05'},
+      {ca:'Sáng',tiet:2,gio:'08:10 - 08:45'},
+      {break:true,ca:'Sáng',gio:'08:45 - 09:00',label:'Ra chơi'},
+      {ca:'Sáng',tiet:3,gio:'09:15 - 09:50'},
+      {ca:'Sáng',tiet:4,gio:'09:55 - 10:30'},
+      {lunch:true,gio:'10:30 - 13:30',label:'Nghỉ trưa'},
+      {ca:'Chiều',tiet:1,gio:'13:30 - 14:05'},
+      {ca:'Chiều',tiet:2,gio:'14:10 - 14:45'},
+      {break:true,ca:'Chiều',gio:'14:45 - 15:00',label:'Ra chơi'},
+      {ca:'Chiều',tiet:3,gio:'15:25 - 16:00'}
     ];
 
-    // ==== ĐÃ CẬP NHẬT DATA THEO BẠN CUNG CẤP ====
-    const DATA = {
-      1: { // Thứ 2
-        "Sáng-1": "Chào cờ", "Sáng-2": "2/3", "Sáng-3": "", "Sáng-4": "3/1",
-        "Chiều-1": "", "Chiều-2": "", "Chiều-3": ""
-      },
-      2: { // Thứ 3
-        "Sáng-1": "", "Sáng-2": "", "Sáng-3": "", "Sáng-4": "3/3",
-        "Chiều-1": "2/2", "Chiều-2": "1/3", "Chiều-3": "1/1"
-      },
-      3: { // Thứ 4
-        "Sáng-1": "", "Sáng-2": "", "Sáng-3": "", "Sáng-4": "",
-        "Chiều-1": "", "Chiều-2": "", "Chiều-3": ""
-      },
-      4: { // Thứ 5
-        "Sáng-1": "", "Sáng-2": "", "Sáng-3": "", "Sáng-4": "",
-        "Chiều-1": "1/4", "Chiều-2": "3/4", "Chiều-3": "2/4"
-      },
-      5: { // Thứ 6
-        "Sáng-1": "3/2", "Sáng-2": "2/1", "Sáng-3": "1/2", "Sáng-4": "",
-        "Chiều-1": "", "Chiều-2": "", "Chiều-3": ""
-      }
+    const DATA={
+      1:{"Sáng-1":"Chào cờ","Sáng-2":"2/3","Sáng-3":"","Sáng-4":"3/1","Chiều-1":"","Chiều-2":"","Chiều-3":""},
+      2:{"Sáng-1":"","Sáng-2":"","Sáng-3":"","Sáng-4":"3/3","Chiều-1":"2/2","Chiều-2":"1/3","Chiều-3":"1/1"},
+      3:{"Sáng-1":"","Sáng-2":"","Sáng-3":"","Sáng-4":"","Chiều-1":"","Chiều-2":"","Chiều-3":""},
+      4:{"Sáng-1":"","Sáng-2":"","Sáng-3":"","Sáng-4":"","Chiều-1":"1/4","Chiều-2":"3/4","Chiều-3":"2/4"},
+      5:{"Sáng-1":"3/2","Sáng-2":"2/1","Sáng-3":"1/2","Sáng-4":"","Chiều-1":"","Chiều-2":"","Chiều-3":""}
     };
 
     function buildTable(){
@@ -198,11 +152,11 @@
           tr.classList.add('lunch-row');
           tr.innerHTML=`<td colspan="3">${row.label}<br><small>${row.gio}</small></td>${'<td></td>'.repeat(5)}`;
         } else {
-          let cols = '';
-          for(let d=1; d<=5; d++){
-            let key = `${row.ca}-${row.tiet}`;
-            let val = DATA[d]?.[key] || '';
-            cols += `<td contenteditable="true">${val}</td>`;
+          let cols='';
+          for(let d=1;d<=5;d++){
+            let key=`${row.ca}-${row.tiet}`;
+            let val=DATA[d]?.[key]||'';
+            cols+=`<td contenteditable="true">${val}</td>`;
           }
           tr.innerHTML=`<td>${row.ca}</td><td>${row.tiet}</td><td>${row.gio}</td>${cols}`;
         }
@@ -213,58 +167,70 @@
     function highlightTick(){
       const now=new Date();
       const day=now.getDay();
-      const minutes = now.getHours()*60 + now.getMinutes();
-
+      const minutes=now.getHours()*60+now.getMinutes();
       [...tbody.querySelectorAll('.highlight')].forEach(el=>el.classList.remove('highlight'));
-
-      if(day>=1 && day<=5){
-        const colIndex = day + 2;
+      if(day>=1&&day<=5){
+        const colIndex=day+2;
         caTiet.forEach((row,i)=>{
-          if(!row.break && !row.lunch){
-            const [s,e] = row.gio.split(' - ');
-            const toMin=t=>{const [hh,mm]=t.split(':').map(Number);return hh*60+mm};
-            const S=toMin(s), E=toMin(e);
-            if(minutes>=S && minutes<=E){
-              tbody.rows[i].cells[colIndex].classList.add('highlight');
-            }
+          if(!row.break&&!row.lunch){
+            const[s,e]=row.gio.split(' - ');
+            const toMin=t=>{const[hh,mm]=t.split(':').map(Number);return hh*60+mm};
+            const S=toMin(s),E=toMin(e);
+            if(minutes>=S&&minutes<=E){ tbody.rows[i].cells[colIndex].classList.add('highlight'); }
           }
         });
       }
-      document.getElementById('today').textContent = new Date().toLocaleDateString('vi-VN',{weekday:'long', day:'2-digit', month:'2-digit', year:'numeric'});
+      document.getElementById('today').textContent=new Date().toLocaleDateString('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'});
     }
 
     function save(){
       const data=[...tbody.rows].map(r=>[...r.cells].map(c=>c.getAttribute('contenteditable')?c.innerHTML:c.innerText));
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+      localStorage.setItem('tkb-notes',document.getElementById('dailyNotes').value);
     }
 
     function load(){
-      const raw=localStorage.getItem(STORAGE_KEY); if(!raw) return; let data; try{data=JSON.parse(raw)}catch{return}
-      [...tbody.rows].forEach((r,i)=>{ [...r.cells].forEach((c,j)=>{ if(c.getAttribute('contenteditable')){ c.innerHTML=(data?.[i]?.[j]||c.innerHTML); } }); });
+      const raw=localStorage.getItem(STORAGE_KEY);
+      if(raw){ let data; try{data=JSON.parse(raw)}catch{return}
+        [...tbody.rows].forEach((r,i)=>{[...r.cells].forEach((c,j)=>{ if(c.getAttribute('contenteditable')){ c.innerHTML=(data?.[i]?.[j]||c.innerHTML); } });});
+      }
+      const notes=localStorage.getItem('tkb-notes');
+      if(notes!==null){ document.getElementById('dailyNotes').value=notes; }
     }
 
-    buildTable();
-    load();
-    highlightTick();
-    setInterval(highlightTick, 30000);
+    function exportCSV(){
+      let csv='Ca,Tiết,Giờ,Thứ 2,Thứ 3,Thứ 4,Thứ 5,Thứ 6\n';
+      [...tbody.rows].forEach(r=>{ let row=[...r.cells].map(c=>c.innerText.replace(/\n/g,' ')); csv+=row.join(',')+'\n'; });
+      const blob=new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='tkb.csv'; a.click(); URL.revokeObjectURL(url);
+    }
 
-    tbody.addEventListener('input', e=>{ if(e.target.matches('[contenteditable]')){ save(); } });
-    document.getElementById('printBtn').addEventListener('click', ()=>window.print());
-    document.getElementById('saveBtn').addEventListener('click', save);
-    document.getElementById('themeBtn').addEventListener('click', ()=>{
-      const root = document.documentElement; const on = root.dataset.theme||'light';
-      root.dataset.theme = on==='light' ? 'dark' : 'light';
-    });
+    function searchTable(){ const keyword=document.getElementById('searchInput').value.toLowerCase(); [...tbody.rows].forEach(r=>{ let text=r.innerText.toLowerCase(); r.style.display=text.includes(keyword)?'':''; }); }
+
+    // Palette handling & theme persistence
+    function applyPalette(p){
+      const r=document.documentElement;
+      if(p==='mint'){ r.style.setProperty('--primary','#10b981'); r.style.setProperty('--primary2','#14b8a6'); }
+      else if(p==='sunset'){ r.style.setProperty('--primary','#f97316'); r.style.setProperty('--primary2','#ef4444'); }
+      else { r.style.setProperty('--primary','#7c3aed'); r.style.setProperty('--primary2','#06b6d4'); }
+    }
+
+    // Init
+    buildTable(); load(); highlightTick(); setInterval(highlightTick,30000);
+
+    // Events
+    tbody.addEventListener('input',e=>{if(e.target.matches('[contenteditable]')){save();}});
+    document.getElementById('printBtn').addEventListener('click',()=>window.print());
+    document.getElementById('saveBtn').addEventListener('click',save);
+    document.getElementById('exportBtn').addEventListener('click',exportCSV);
+    document.getElementById('searchInput').addEventListener('input',searchTable);
+    document.getElementById('themeBtn').addEventListener('click',()=>{ const root=document.documentElement; const on=root.dataset.theme||'light'; root.dataset.theme=on==='light'?'dark':'light'; try{ localStorage.setItem(THEME_KEY, root.dataset.theme); }catch{} });
+    document.querySelectorAll('.palette-btn').forEach(b=>{ b.addEventListener('click',()=>{ const p=b.dataset.pal; applyPalette(p); try{localStorage.setItem(PAL_KEY,p);}catch{} }); });
+    document.getElementById('dailyNotes').addEventListener('input',()=>save());
+
+    // Apply saved theme/palette on load
+    (function(){ try{ const t=localStorage.getItem(THEME_KEY); if(t) document.documentElement.dataset.theme=t; const p=localStorage.getItem(PAL_KEY); if(p) applyPalette(p);}catch{} })();
 
     document.getElementById('year').textContent=new Date().getFullYear();
-
-    for(let i=0;i<6;i++){
-      const grape=document.createElement('div');
-      grape.className='grape';
-      grape.style.left=Math.random()*100+'vw';
-      grape.style.animationDuration=(10+Math.random()*5)+'s';
-      document.body.appendChild(grape);
-    }
   </script>
 </body>
 </html>
